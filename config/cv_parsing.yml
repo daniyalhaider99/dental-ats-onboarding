@@ -1,0 +1,14 @@
+shared:
+  max_file_size_megabytes: 25
+  accepted_content_types:
+    - application/pdf
+    - application/msword
+    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  openai:
+    model: gpt-4.1-mini
+    temperature: 0
+    request_timeout_seconds: 60
+    max_attempts: 3
+
+test:
+  max_file_size_megabytes: 5
