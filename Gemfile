@@ -40,16 +40,9 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-# CV text extraction. See ARCHITECTURE.md section 2 for the evaluation behind these
-# choices; both are pure Ruby, so no system binary is required for PDF or DOCX.
 gem "pdf-reader", "~> 2.14"
 gem "docx", "~> 0.8"
-
-# Validates the parser's JSON against config/schemas/cv_extraction.json before any
-# of it is mapped onto a model.
 gem "json-schema", "~> 5.1"
-
-# Phone validation supporting Dutch and international formats (PRD section 8).
 gem "phonelib", "~> 0.10"
 
 group :development, :test do
@@ -72,7 +65,6 @@ end
 
 group :test do
   gem "shoulda-matchers", "~> 6.4"
-  # The OpenAI boundary is stubbed in every spec; no test ever makes a real request.
   gem "webmock", "~> 3.24"
   gem "capybara"
   gem "selenium-webdriver"

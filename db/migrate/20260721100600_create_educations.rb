@@ -10,8 +10,6 @@ class CreateEducations < ActiveRecord::Migration[8.1]
       t.date    :start_date
       t.date    :end_date
 
-      # Preserves the order the candidate arranged records in, which is otherwise
-      # lost because dates are optional (PRD 3.4).
       t.integer :position, null: false, default: 0
 
       t.timestamps

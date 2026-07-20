@@ -20,7 +20,6 @@ class CreateWorkExperiences < ActiveRecord::Migration[8.1]
                          "start_date IS NULL OR end_date IS NULL OR end_date >= start_date",
                          name: "chk_work_experiences_end_after_start"
 
-    # A job the candidate still holds cannot also have an end date.
     add_check_constraint :work_experiences,
                          "NOT (current_job AND end_date IS NOT NULL)",
                          name: "chk_work_experiences_current_job_has_no_end_date"

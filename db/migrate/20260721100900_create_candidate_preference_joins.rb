@@ -1,5 +1,3 @@
-# Join tables for the multi-selects in PRD 3.2, 3.3 and 3.7. All four have the same
-# shape: a candidate profile, a reference record, and a uniqueness guarantee.
 class CreateCandidatePreferenceJoins < ActiveRecord::Migration[8.1]
   JOINS = {
     candidate_profile_regions:          :region,

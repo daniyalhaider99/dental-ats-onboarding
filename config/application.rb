@@ -39,7 +39,6 @@ module DentalAtsOnboarding
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    # Every table in this application uses a UUID primary key.
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end

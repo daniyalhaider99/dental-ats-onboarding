@@ -37,20 +37,10 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
-# RSpec's record of the last run, used by --only-failures. Per-developer state.
 /spec/examples.txt
-
-# Coverage reports.
 /coverage
-
-# Text extracted from uploaded CVs during local debugging. Never commit candidate
-# data: these files contain names, phone numbers and addresses.
 /tmp/cv_extractions
-
-# macOS finder metadata.
 .DS_Store
-
-# Editor directories.
 /.idea
 /.vscode
 *.swp

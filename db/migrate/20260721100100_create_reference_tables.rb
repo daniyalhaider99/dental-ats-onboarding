@@ -1,6 +1,3 @@
-# The platform's fixed vocabularies. PRD section 14 asks for these to be manageable
-# from the database rather than hardcoded, so each is a table with a stable slug that
-# code refers to and a display name that an admin can safely edit.
 class CreateReferenceTables < ActiveRecord::Migration[8.1]
   REFERENCE_TABLES = %i[
     regions
@@ -26,8 +23,6 @@ class CreateReferenceTables < ActiveRecord::Migration[8.1]
       end
     end
 
-    # Employment type drives the salary-vs-percentage branch in PRD section 4. Storing
-    # the compensation basis on the row keeps that rule out of the view layer.
     add_column :employment_types, :compensation_basis, :integer, null: false, default: 0
     add_index  :employment_types, :compensation_basis
   end
