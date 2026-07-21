@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+Rails.autoloaders.each do |autoloader|
+  autoloader.inflector.inflect(
+    "openai" => "OpenAI",
+    "openai_parser" => "OpenAIParser"
+  )
+end
