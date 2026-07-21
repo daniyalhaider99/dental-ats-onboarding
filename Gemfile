@@ -42,7 +42,7 @@ gem "image_processing", "~> 1.2"
 
 gem "pdf-reader", "~> 2.14"
 gem "docx", "~> 0.8"
-gem "json-schema", "~> 5.1"
+gem "json-schema", "~> 6.2"
 gem "phonelib", "~> 0.10"
 
 group :development, :test do
