@@ -1,0 +1,15 @@
+<% provenance = local_assigns[:provenance] %>
+<% wrapper = local_assigns[:wrapper] %>
+<div class="space-y-1"<%= wrapper ? raw(" data-#{wrapper}") : "" %>>
+  <div class="flex items-center justify-between gap-2">
+    <%= form.label field, local_assigns[:label], class: "block text-sm font-medium text-slate-700" %>
+    <% if provenance %>
+      <%= provenance_badge(provenance, field) %>
+    <% end %>
+  </div>
+  <%= form.public_send(
+        local_assigns.fetch(:as, :text_field),
+        field,
+        class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500"
+      ) %>
+</div>

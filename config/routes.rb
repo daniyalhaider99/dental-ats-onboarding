@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   namespace :onboarding do
     resource :cv_upload, only: %i[new create], path: "cv"
+    resource :profile, only: %i[show update] do
+      get :status, on: :collection
+    end
   end
 
   root "onboarding/cv_uploads#new"

@@ -13,7 +13,7 @@ module Onboarding
 
       if result.success?
         session[:candidate_profile_id] = result.value.candidate_profile_id
-        redirect_to root_path, notice: "Your CV was uploaded."
+        redirect_to onboarding_profile_path
       else
         @upload_form.errors.add(:base, result.error)
         render :new, status: :unprocessable_entity

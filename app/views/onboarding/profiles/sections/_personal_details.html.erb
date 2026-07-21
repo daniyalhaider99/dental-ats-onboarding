@@ -1,0 +1,26 @@
+<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+  <h2 class="text-base font-semibold text-slate-900">Personal details</h2>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :first_name, label: "First name", provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :last_name, label: "Last name", provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :email, label: "Email", as: :email_field, provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :phone, label: "Phone number", as: :telephone_field, provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :city, label: "City / place of residence", provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :country, label: "Country", provenance: provenance %>
+  </div>
+
+  <fieldset class="mt-6">
+    <legend class="text-sm font-medium text-slate-700">Languages</legend>
+    <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <% onboarding_languages.each do |language| %>
+        <label class="flex items-center gap-2 text-sm text-slate-700">
+          <%= check_box_tag "candidate_profile[language_ids][]", language.id,
+                            form.object.language_ids.include?(language.id),
+                            id: "language_#{language.id}", class: "h-4 w-4 rounded border-slate-300" %>
+          <%= language.name %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+</section>

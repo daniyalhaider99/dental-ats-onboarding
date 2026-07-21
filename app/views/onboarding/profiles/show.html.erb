@@ -1,0 +1,12 @@
+<div class="mx-auto max-w-3xl px-4 py-10">
+  <div class="mb-8 flex items-center gap-3">
+    <%= onboarding_step_indicator(2) %>
+  </div>
+
+  <%= turbo_stream_from @profile %>
+
+  <div data-controller="parsing-poll"
+       data-parsing-poll-url-value="<%= status_onboarding_profile_path %>">
+    <%= render "onboarding/profiles/body", profile: @profile %>
+  </div>
+</div>

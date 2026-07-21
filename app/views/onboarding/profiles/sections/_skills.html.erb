@@ -1,0 +1,36 @@
+<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+  <h2 class="text-base font-semibold text-slate-900">Skills</h2>
+  <p class="mt-1 text-sm text-slate-500">Skills are shown for your selected job function.</p>
+
+  <% skills = onboarding_skills_for(profile) %>
+  <% if skills.any? %>
+    <div class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <% skills.each do |skill| %>
+        <label class="flex items-center gap-2 text-sm text-slate-700">
+          <%= check_box_tag "candidate_profile[skill_ids][]", skill.id,
+                            profile.skill_ids.include?(skill.id),
+                            id: "skill_#{skill.id}", class: "h-4 w-4 rounded border-slate-300" %>
+          <%= skill.name %>
+        </label>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="mt-4 rounded-md bg-slate-50 p-3 text-sm text-slate-500">
+      Select a desired job function above to see the relevant skills.
+    </p>
+  <% end %>
+
+  <% suggestions = profile.candidate_skills.suggested %>
+  <% if suggestions.any? %>
+    <div class="mt-4">
+      <p class="text-sm font-medium text-slate-700">Detected in your CV (kept for the recruiter)</p>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <% suggestions.each do |candidate_skill| %>
+          <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600">
+            <%= candidate_skill.free_text_suggestion %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</section>

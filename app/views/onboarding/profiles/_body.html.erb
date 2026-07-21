@@ -1,0 +1,9 @@
+<% document = profile.latest_cv %>
+<div id="onboarding_body" data-parsing-poll-target="body"
+     data-in-progress="<%= document&.parsing_in_progress? || false %>">
+  <% if document&.parsing_in_progress? %>
+    <%= render "onboarding/profiles/processing" %>
+  <% else %>
+    <%= render "onboarding/profiles/review", profile: profile, document: document %>
+  <% end %>
+</div>

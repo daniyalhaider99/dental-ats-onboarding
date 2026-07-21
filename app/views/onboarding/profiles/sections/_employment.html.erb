@@ -1,0 +1,63 @@
+<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+  <h2 class="text-base font-semibold text-slate-900">Employment and compensation</h2>
+
+  <fieldset class="mt-4">
+    <legend class="text-sm font-medium text-slate-700">Desired employment type</legend>
+    <div class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <% onboarding_employment_types.each do |type| %>
+        <label class="flex items-center gap-2 text-sm text-slate-700">
+          <%= check_box_tag "candidate_profile[employment_type_ids][]", type.id,
+                            form.object.employment_type_ids.include?(type.id),
+                            id: "employment_type_#{type.id}",
+                            data: { basis: type.compensation_basis, action: "change->conditional-fields#employmentChanged" },
+                            class: "h-4 w-4 rounded border-slate-300" %>
+          <%= type.name %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :years_of_experience,
+               label: "Years of combined dental experience", as: :number_field, provenance: provenance %>
+
+    <div data-conditional-fields-target="salary" class="space-y-1">
+      <%= form.label :desired_gross_salary, "Desired gross salary (€)", class: "block text-sm font-medium text-slate-700" %>
+      <%= form.number_field :desired_gross_salary, step: 0.01,
+            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+    </div>
+
+    <div data-conditional-fields-target="percentage" class="space-y-1">
+      <%= form.label :desired_percentage, "Desired percentage (%)", class: "block text-sm font-medium text-slate-700" %>
+      <%= form.number_field :desired_percentage, step: 0.01, min: 0, max: 100,
+            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+    </div>
+
+    <div data-conditional-fields-target="revenue" class="space-y-1">
+      <%= form.label :average_daily_revenue, "Average daily revenue (€)", class: "block text-sm font-medium text-slate-700" %>
+      <%= form.number_field :average_daily_revenue, step: 0.01,
+            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+    </div>
+  </div>
+
+  <div data-conditional-fields-target="big" class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="space-y-1">
+      <div class="flex items-center justify-between gap-2">
+        <%= form.label :big_registration_status, "BIG registration status", class: "block text-sm font-medium text-slate-700" %>
+        <%= provenance_badge(provenance, :big_registration_status) %>
+      </div>
+      <%= form.select :big_registration_status, onboarding_big_statuses, { include_blank: "Select…" },
+            data: { action: "change->conditional-fields#bigStatusChanged" },
+            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+    </div>
+
+    <div data-conditional-fields-target="bigNumber" class="space-y-1">
+      <div class="flex items-center justify-between gap-2">
+        <%= form.label :big_number, "BIG number", class: "block text-sm font-medium text-slate-700" %>
+        <%= provenance_badge(provenance, :big_number) %>
+      </div>
+      <%= form.text_field :big_number,
+            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+    </div>
+  </div>
+</section>

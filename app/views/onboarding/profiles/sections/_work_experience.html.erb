@@ -1,0 +1,23 @@
+<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
+         data-controller="nested-form"
+         data-nested-form-association-value="work_experiences">
+  <div class="flex items-center justify-between">
+    <h2 class="text-base font-semibold text-slate-900">Work experience</h2>
+    <button type="button" data-action="nested-form#add"
+            class="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+      Add work experience
+    </button>
+  </div>
+
+  <template data-nested-form-target="template">
+    <%= form.fields_for :work_experiences, WorkExperience.new, child_index: "NEW_RECORD" do |wf| %>
+      <%= render "onboarding/profiles/sections/work_experience_fields", wf: wf %>
+    <% end %>
+  </template>
+
+  <div data-nested-form-target="target" class="mt-4 space-y-4">
+    <%= form.fields_for :work_experiences do |wf| %>
+      <%= render "onboarding/profiles/sections/work_experience_fields", wf: wf %>
+    <% end %>
+  </div>
+</section>

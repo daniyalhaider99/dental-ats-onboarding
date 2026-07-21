@@ -1,0 +1,22 @@
+<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+  <h2 class="text-base font-semibold text-slate-900">Availability</h2>
+
+  <fieldset class="mt-4">
+    <legend class="text-sm font-medium text-slate-700">Available working days</legend>
+    <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <% onboarding_working_days.each do |day| %>
+        <label class="flex items-center gap-2 text-sm text-slate-700">
+          <%= check_box_tag "candidate_profile[working_day_ids][]", day.id,
+                            form.object.working_day_ids.include?(day.id),
+                            id: "working_day_#{day.id}", class: "h-4 w-4 rounded border-slate-300" %>
+          <%= day.name %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :available_from, label: "Available from", as: :date_field %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :notice_period, label: "Notice period (optional)" %>
+  </div>
+</section>

@@ -43,6 +43,7 @@ module CvParsing
         parsed_at: Time.current,
         parsing_error: nil
       )
+      broadcast
       ServiceResult.success(document)
     end
 
@@ -52,7 +53,12 @@ module CvParsing
         parsed_at: Time.current,
         parsing_error: message
       )
+      broadcast
       ServiceResult.failure(message)
+    end
+
+    def broadcast
+      Onboarding::StatusBroadcast.call(document.candidate_profile)
     end
   end
 end
