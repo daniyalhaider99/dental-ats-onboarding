@@ -9,5 +9,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    root "candidates#index"
+    resources :candidates, only: %i[index show] do
+      resource :cv, only: :show, controller: "candidate_cvs"
+    end
+  end
+
   root "onboarding/cv_uploads#new"
 end

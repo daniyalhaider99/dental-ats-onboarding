@@ -1,0 +1,39 @@
+<div class="mx-auto max-w-5xl px-4 py-10">
+  <h1 class="text-xl font-semibold text-slate-900">Candidates</h1>
+
+  <% if @profiles.empty? %>
+    <p class="mt-6 rounded-md bg-slate-50 p-4 text-sm text-slate-500">No candidates yet.</p>
+  <% else %>
+    <div class="mt-6 overflow-hidden rounded-lg border border-slate-200">
+      <table class="min-w-full divide-y divide-slate-200 text-sm">
+        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+          <tr>
+            <th class="px-4 py-3">Name</th>
+            <th class="px-4 py-3">Function</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">CV parsing</th>
+            <th class="px-4 py-3">Created</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 bg-white">
+          <% @profiles.each do |profile| %>
+            <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3">
+                <%= link_to profile.full_name || profile.email || "Unnamed draft",
+                            admin_candidate_path(profile), class: "font-medium text-slate-900 hover:underline" %>
+              </td>
+              <td class="px-4 py-3 text-slate-600"><%= profile.job_function&.name || "—" %></td>
+              <td class="px-4 py-3">
+                <span class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium <%= profile.completed? ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600" %>">
+                  <%= profile.status.humanize %>
+                </span>
+              </td>
+              <td class="px-4 py-3 text-slate-600"><%= profile.latest_cv&.parsing_status&.humanize || "—" %></td>
+              <td class="px-4 py-3 text-slate-500"><%= profile.created_at.to_fs(:short) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

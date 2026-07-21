@@ -1,0 +1,58 @@
+<div class="mx-auto max-w-3xl px-4 py-10">
+  <%= link_to "← All candidates", admin_candidates_path, class: "text-sm text-slate-500 hover:underline" %>
+
+  <div class="mt-4 flex items-start justify-between">
+    <div>
+      <h1 class="text-xl font-semibold text-slate-900"><%= @profile.full_name || "Unnamed draft" %></h1>
+      <p class="text-sm text-slate-500"><%= @profile.email %> · <%= @profile.phone %></p>
+    </div>
+    <% if @document&.file&.attached? %>
+      <%= link_to "View CV", admin_candidate_cv_path(@profile),
+                  class: "rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+    <% end %>
+  </div>
+
+  <dl class="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 rounded-lg border border-slate-200 bg-white p-6 text-sm sm:grid-cols-2">
+    <% {
+      "City" => @profile.city, "Country" => @profile.country,
+      "Function" => @profile.job_function&.name, "Search status" => @profile.search_status&.humanize,
+      "Years of experience" => @profile.years_of_experience, "Available from" => @profile.available_from,
+      "BIG status" => @profile.big_registration_status&.humanize, "BIG number" => @profile.big_number,
+      "Regions" => @profile.regions.map(&:name).join(", ").presence,
+      "Employment types" => @profile.employment_types.map(&:name).join(", ").presence,
+      "Working days" => @profile.working_days.map(&:name).join(", ").presence,
+      "Languages" => @profile.languages.map(&:name).join(", ").presence
+    }.each do |label, value| %>
+      <div>
+        <dt class="text-xs uppercase tracking-wide text-slate-400"><%= label %></dt>
+        <dd class="text-slate-800"><%= value.presence || "—" %></dd>
+      </div>
+    <% end %>
+  </dl>
+
+  <% if @profile.professional_summary.present? %>
+    <div class="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+      <h2 class="text-sm font-semibold text-slate-900">Professional summary</h2>
+      <p class="mt-2 text-sm text-slate-700"><%= @profile.professional_summary %></p>
+    </div>
+  <% end %>
+
+  <%= render "admin/candidates/collection", title: "Education",
+             records: @profile.educations, formatter: ->(e) { "#{e.study} — #{e.institution}".chomp(" — ") } %>
+  <%= render "admin/candidates/collection", title: "Work experience",
+             records: @profile.work_experiences, formatter: ->(w) { "#{w.job_title} — #{w.company_name}" } %>
+
+  <div class="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+    <h2 class="text-sm font-semibold text-slate-900">Skills</h2>
+    <div class="mt-2 flex flex-wrap gap-2">
+      <% @profile.skills.each do |skill| %>
+        <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700"><%= skill.name %></span>
+      <% end %>
+      <% @profile.candidate_skills.suggested.each do |cs| %>
+        <span class="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs text-amber-700" title="Suggested from CV">
+          <%= cs.free_text_suggestion %> (review)
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

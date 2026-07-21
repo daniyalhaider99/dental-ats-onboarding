@@ -1,0 +1,12 @@
+<div class="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+  <h2 class="text-sm font-semibold text-slate-900"><%= title %></h2>
+  <% if records.any? %>
+    <ul class="mt-2 space-y-1 text-sm text-slate-700">
+      <% records.each do |record| %>
+        <li><%= formatter.call(record) %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="mt-2 text-sm text-slate-400">None provided.</p>
+  <% end %>
+</div>
