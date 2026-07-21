@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :cv_upload, only: %i[new create], path: "cv"
     resource :profile, only: %i[show update] do
       get :status, on: :collection
+      get :skills, on: :collection
     end
   end
 

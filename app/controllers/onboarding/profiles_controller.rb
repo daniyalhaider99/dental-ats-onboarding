@@ -24,6 +24,12 @@ module Onboarding
       end
     end
 
+    def skills
+      job_function = JobFunction.active.find_by(id: params[:job_function_id])
+      render partial: "onboarding/profiles/sections/skills",
+             locals: { profile: current_profile, job_function: job_function }
+    end
+
     def update
       @profile = current_profile
       result = CandidateProfiles::Complete.call(profile: @profile, params: profile_params)
