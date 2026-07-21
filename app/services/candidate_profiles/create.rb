@@ -17,6 +17,8 @@ module CandidateProfiles
         attach_file(document)
       end
 
+      ParseCandidateCvJob.perform_later(document)
+
       ServiceResult.success(document)
     rescue ActiveRecord::RecordInvalid => e
       ServiceResult.failure(e.record.errors.full_messages.to_sentence)
