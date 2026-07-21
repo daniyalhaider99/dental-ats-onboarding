@@ -17,6 +17,7 @@ module CvParsing
       parsing = OpenAIParser.call(cv_text: extraction.value)
       return fail_with(parsing.error) if parsing.failure?
 
+      persist(parsing.value)
       complete_with(parsing.value)
     rescue ApiError
       document.update!(parsing_status: :processing)
@@ -29,6 +30,11 @@ module CvParsing
     private
 
     attr_reader :document
+
+    def persist(parsed)
+      mapped = MapResult.call(parsed)
+      SaveResult.call(profile: document.candidate_profile, mapped: mapped)
+    end
 
     def complete_with(parsed)
       document.update!(
