@@ -90,7 +90,7 @@ class CandidateProfile < ApplicationRecord
   end
 
   def latest_cv
-    candidate_documents.cv.order(created_at: :desc).first
+    candidate_documents.select(&:cv?).max_by(&:created_at)
   end
 
   private

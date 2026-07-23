@@ -44,3 +44,8 @@
 /.idea
 /.vscode
 *.swp
+
+# Empty-directory placeholders. The runtime ones Rails needs at boot
+# (log, tmp, storage, app/assets/builds) are already tracked and stay tracked;
+# this stops stray new .keep files from being committed.
+.keep

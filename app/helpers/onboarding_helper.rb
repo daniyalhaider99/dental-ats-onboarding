@@ -37,11 +37,6 @@ module OnboardingHelper
     CandidateLanguage.proficiencies.keys.map { |level| [ level.humanize, level ] }
   end
 
-  def onboarding_skills_for(profile)
-    group = profile.job_function&.skill_group
-    group ? group.skills.active.ordered : Skill.none
-  end
-
   SECTION_ICONS = {
     personal: "M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z",
     preferences: "M3 6h18M7 12h10M10 18h4",

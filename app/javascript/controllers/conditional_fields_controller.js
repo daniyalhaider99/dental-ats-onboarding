@@ -22,6 +22,7 @@ export default class extends Controller {
 
     this.#toggle(this.bigTarget, requiresBig)
     this.#toggle(this.revenueTarget, revenueRelevant)
+    this.bigStatusChanged()
     this.#refreshSkills(option?.value)
   }
 
