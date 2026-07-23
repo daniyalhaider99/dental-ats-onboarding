@@ -5,6 +5,8 @@ class CandidateDocument < ApplicationRecord
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => :docx
   }.freeze
 
+  STALE_AFTER = 2.minutes
+
   belongs_to :candidate_profile, inverse_of: :candidate_documents
 
   has_one_attached :file
@@ -20,6 +22,9 @@ class CandidateDocument < ApplicationRecord
   }
 
   scope :most_recent_first, -> { order(created_at: :desc) }
+  scope :parsing_stalled, lambda {
+    where(parsing_status: %i[pending processing]).where(updated_at: ..STALE_AFTER.ago)
+  }
 
   def format
     CONTENT_TYPES.fetch(content_type)
@@ -31,5 +36,19 @@ class CandidateDocument < ApplicationRecord
 
   def parsing_finished?
     parsing_completed? || parsing_failed?
+  end
+
+  def parsing_stalled?
+    parsing_in_progress? && updated_at <= STALE_AFTER.ago
+  end
+
+  def fail_as_stalled!
+    return false unless parsing_stalled?
+
+    update!(
+      parsing_status: :failed,
+      parsed_at: Time.current,
+      parsing_error: "Parsing timed out. Please review and complete the profile manually."
+    )
   end
 end

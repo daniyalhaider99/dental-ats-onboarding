@@ -35,6 +35,18 @@ RSpec.describe "Onboarding profiles" do
       expect(response.body).to include("Anna").and include("Extracted from CV").and include("Please check")
     end
 
+    it "unsticks a stalled parse into the manual form when the page is viewed" do
+      document = CandidateProfile.last.latest_cv
+      document.update_columns(parsing_status: CandidateDocument.parsing_statuses[:processing],
+                              updated_at: 1.hour.ago)
+
+      get onboarding_profile_path
+
+      expect(response).to have_http_status(:ok)
+      expect(document.reload).to be_parsing_failed
+      expect(response.body).to include("couldn't read your CV")
+    end
+
     it "returns a turbo stream from the status endpoint" do
       get status_onboarding_profile_path, headers: { "Accept" => "text/vnd.turbo-stream.html" }
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")

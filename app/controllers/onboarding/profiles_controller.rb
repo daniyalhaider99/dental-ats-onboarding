@@ -3,6 +3,7 @@ module Onboarding
     include CurrentOnboarding
 
     before_action :require_current_profile
+    before_action :fail_stalled_parsing, only: %i[show status]
 
     def show
       @profile = current_profile
@@ -44,6 +45,10 @@ module Onboarding
     end
 
     private
+
+    def fail_stalled_parsing
+      current_profile.latest_cv&.fail_as_stalled!
+    end
 
     def profile_params
       params.require(:candidate_profile).permit(
