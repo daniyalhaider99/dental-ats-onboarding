@@ -58,10 +58,19 @@ RSpec.describe "Onboarding profiles" do
       expect(response.body).to include("CAD/CAM")
     end
 
-    it "completes the profile on a valid submit" do
+    it "completes the profile and redirects to the confirmation page" do
       patch onboarding_profile_path, params: { candidate_profile: valid_submit }
-      expect(response).to redirect_to(onboarding_cv_upload_path)
+      expect(response).to redirect_to(onboarding_confirmation_path)
       expect(CandidateProfile.last).to be_completed
+    end
+
+    it "shows a read-only summary on the confirmation page" do
+      patch onboarding_profile_path, params: { candidate_profile: valid_submit }
+      follow_redirect!
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Profile submitted").and include("Anna de Vries")
+      expect(response.body).to include("General dentist")
     end
 
     it "re-renders with errors on an invalid submit" do

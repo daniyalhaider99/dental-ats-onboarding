@@ -36,8 +36,9 @@ module Onboarding
       result = CandidateProfiles::Complete.call(profile: @profile, params: profile_params)
 
       if result.success?
-        reset_session
-        redirect_to onboarding_cv_upload_path, notice: "Your profile has been submitted. Thank you."
+        session.delete(:candidate_profile_id)
+        session[:completed_profile_id] = @profile.id
+        redirect_to onboarding_confirmation_path
       else
         @document = @profile.latest_cv
         render :show, status: :unprocessable_content

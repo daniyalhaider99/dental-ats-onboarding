@@ -1,0 +1,43 @@
+<% content_for :title, "Profile submitted — DentalMatch" %>
+
+<div class="mx-auto max-w-2xl py-10">
+  <div class="mb-8 flex items-center gap-3">
+    <%= onboarding_step_indicator(3) %>
+  </div>
+
+  <div class="app-card overflow-hidden">
+    <div class="flex flex-col items-center gap-3 border-b border-slate-100 bg-gradient-to-br from-emerald-50/80 to-white px-6 py-9 text-center">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+        <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><path d="M22 4L12 14.01l-3-3"></path>
+        </svg>
+      </span>
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900">Profile submitted</h1>
+      <p class="max-w-md text-sm leading-relaxed text-slate-600">
+        Thank you<%= ", #{@profile.first_name}" if @profile.first_name.present? %>. Your profile is saved and our
+        recruitment team will review it and be in touch. Here's a summary of what you submitted.
+      </p>
+    </div>
+
+    <div class="divide-y divide-slate-100">
+      <%= render "onboarding/confirmations/row", label: "Name", value: @profile.full_name %>
+      <%= render "onboarding/confirmations/row", label: "Contact", value: [ @profile.email, @profile.phone ].compact_blank.join(" · ") %>
+      <%= render "onboarding/confirmations/row", label: "Location", value: [ @profile.city, @profile.country ].compact_blank.join(", ") %>
+      <%= render "onboarding/confirmations/row", label: "Desired function", value: @profile.job_function&.name %>
+      <%= render "onboarding/confirmations/row", label: "Employment", value: @profile.employment_types.map(&:name).join(", ") %>
+      <%= render "onboarding/confirmations/row", label: "Preferred regions", value: @profile.regions.map(&:name).join(", ") %>
+      <%= render "onboarding/confirmations/row", label: "Languages", value: @profile.languages.map(&:name).join(", ") %>
+      <%= render "onboarding/confirmations/row", label: "Available from", value: @profile.available_from&.to_fs(:long) %>
+      <%= render "onboarding/confirmations/row", label: "Education", value: pluralize(@profile.educations.size, "record") %>
+      <%= render "onboarding/confirmations/row", label: "Work experience", value: pluralize(@profile.work_experiences.size, "record") %>
+      <%= render "onboarding/confirmations/row", label: "Skills", value: @profile.skills.map(&:name).join(", ") %>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
+    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path>
+    </svg>
+    Your CV and profile are stored privately and shared only with the recruitment team.
+  </div>
+</div>

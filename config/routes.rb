@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :status, on: :collection
       get :skills, on: :collection
     end
+    resource :confirmation, only: :show
   end
 
   namespace :admin do
