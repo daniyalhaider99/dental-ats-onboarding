@@ -13,6 +13,6 @@ module CurrentOnboarding
   def require_current_profile
     return if current_profile
 
-    redirect_to root_path, alert: "Start by uploading your CV."
+    redirect_to new_onboarding_cv_upload_path, alert: "Start by uploading your CV."
   end
 end

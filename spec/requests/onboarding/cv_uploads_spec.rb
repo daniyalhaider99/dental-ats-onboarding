@@ -18,7 +18,7 @@ RSpec.describe "Onboarding CV uploads" do
   end
 
   it "renders the upload screen" do
-    get root_path
+    get new_onboarding_cv_upload_path
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Upload your CV")
   end

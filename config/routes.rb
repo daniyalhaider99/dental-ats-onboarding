@@ -17,5 +17,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root "onboarding/cv_uploads#new"
+  root "home#show"
 end

@@ -18,7 +18,7 @@ RSpec.describe "Onboarding profiles" do
   context "without a profile in the session" do
     it "redirects to the upload screen" do
       get onboarding_profile_path
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(new_onboarding_cv_upload_path)
     end
   end
 

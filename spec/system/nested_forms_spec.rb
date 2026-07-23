@@ -53,7 +53,7 @@ RSpec.describe "Nested education and work experience", type: :system, js: true d
   end
 
   def complete_upload
-    visit root_path
+    visit new_onboarding_cv_upload_path
     attach_file "onboarding_upload_form[file]", cv_fixture_path
     check "onboarding_upload_form[consent]"
     click_button "Analyze CV"
