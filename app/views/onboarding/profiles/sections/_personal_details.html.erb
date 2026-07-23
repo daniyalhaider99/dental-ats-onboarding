@@ -5,7 +5,10 @@
     <%= render "onboarding/profiles/labeled_input", form: form, field: :first_name, label: "First name", provenance: provenance %>
     <%= render "onboarding/profiles/labeled_input", form: form, field: :last_name, label: "Last name", provenance: provenance %>
     <%= render "onboarding/profiles/labeled_input", form: form, field: :email, label: "Email", as: :email_field, provenance: provenance %>
-    <%= render "onboarding/profiles/labeled_input", form: form, field: :phone, label: "Phone number", as: :telephone_field, provenance: provenance %>
+    <%= render "onboarding/profiles/labeled_input", form: form, field: :phone, label: "Phone number",
+               as: :telephone_field, provenance: provenance,
+               placeholder: "+31 6 12345678",
+               hint: "Include your country code, e.g. +31 6 12345678 (NL) or +92 321 4094049." %>
     <%= render "onboarding/profiles/labeled_input", form: form, field: :city, label: "City / place of residence", provenance: provenance %>
     <%= render "onboarding/profiles/labeled_input", form: form, field: :country, label: "Country", provenance: provenance %>
   </div>
