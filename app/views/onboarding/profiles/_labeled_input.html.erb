@@ -1,8 +1,7 @@
 <% provenance = local_assigns[:provenance] %>
-<% wrapper = local_assigns[:wrapper] %>
 <% hint = local_assigns[:hint] %>
 <% placeholder = local_assigns[:placeholder] %>
-<div class="space-y-1"<%= wrapper ? raw(" data-#{wrapper}") : "" %>>
+<div class="space-y-1">
   <div class="flex items-center justify-between gap-2">
     <%= form.label field, local_assigns[:label], class: "field-label" %>
     <% if provenance %>

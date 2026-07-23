@@ -7,7 +7,7 @@ module Onboarding
     def create
       @upload_form = Onboarding::UploadForm.new(upload_params)
 
-      return render :new, status: :unprocessable_entity if @upload_form.invalid?
+      return render :new, status: :unprocessable_content if @upload_form.invalid?
 
       result = CandidateProfiles::Create.call(upload_form: @upload_form)
 
@@ -16,7 +16,7 @@ module Onboarding
         redirect_to onboarding_profile_path
       else
         @upload_form.errors.add(:base, result.error)
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

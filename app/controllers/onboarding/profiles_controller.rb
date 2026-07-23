@@ -40,7 +40,7 @@ module Onboarding
         redirect_to onboarding_cv_upload_path, notice: "Your profile has been submitted. Thank you."
       else
         @document = @profile.latest_cv
-        render :show, status: :unprocessable_entity
+        render :show, status: :unprocessable_content
       end
     end
 

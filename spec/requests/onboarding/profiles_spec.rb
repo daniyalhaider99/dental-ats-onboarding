@@ -66,7 +66,7 @@ RSpec.describe "Onboarding profiles" do
 
     it "re-renders with errors on an invalid submit" do
       patch onboarding_profile_path, params: { candidate_profile: { first_name: "" } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include("to fix")
     end
   end

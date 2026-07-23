@@ -43,12 +43,12 @@ RSpec.describe "Onboarding CV uploads" do
     file = Rack::Test::UploadedFile.new(disguised.path, "application/pdf")
 
     post onboarding_cv_upload_path, params: upload_params(file: file)
-    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response).to have_http_status(:unprocessable_content)
     expect(response.body).to include("PDF, DOC or DOCX")
   end
 
   it "requires consent" do
     post onboarding_cv_upload_path, params: upload_params(consent: "0")
-    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response).to have_http_status(:unprocessable_content)
   end
 end
