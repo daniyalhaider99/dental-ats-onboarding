@@ -1,5 +1,5 @@
-<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-  <h2 class="text-base font-semibold text-slate-900">Job preferences</h2>
+<section class="section-card">
+  <%= onboarding_section_header("Job preferences", :preferences) %>
 
   <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="space-y-1">
@@ -10,7 +10,7 @@
       <select name="candidate_profile[job_function_id]" id="candidate_profile_job_function_id"
               data-conditional-fields-target="jobFunction"
               data-action="change->conditional-fields#jobFunctionChanged"
-              class="block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500">
+              class="form-input">
         <option value="">Select a function…</option>
         <% onboarding_job_functions.each do |fn| %>
           <option value="<%= fn.id %>"
@@ -30,7 +30,7 @@
     <div class="space-y-1">
       <%= form.label :search_status, "Search status", class: "block text-sm font-medium text-slate-700" %>
       <%= form.select :search_status, onboarding_search_statuses, { include_blank: "Select…" },
-                      class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+                      class: "form-input" %>
     </div>
 
     <%= render "onboarding/profiles/labeled_input", form: form, field: :reason_for_looking, label: "Reason for looking (optional)" %>
@@ -40,7 +40,7 @@
     <legend class="text-sm font-medium text-slate-700">Preferred regions</legend>
     <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
       <% onboarding_regions.each do |region| %>
-        <label class="flex items-center gap-2 text-sm text-slate-700">
+        <label class="choice-pill">
           <%= check_box_tag "candidate_profile[region_ids][]", region.id,
                             form.object.region_ids.include?(region.id),
                             id: "region_#{region.id}", class: "h-4 w-4 rounded border-slate-300" %>
@@ -54,7 +54,7 @@
     <legend class="text-sm font-medium text-slate-700">Transport type (optional)</legend>
     <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
       <% onboarding_transport_types.each do |transport| %>
-        <label class="flex items-center gap-2 text-sm text-slate-700">
+        <label class="choice-pill">
           <%= check_box_tag "candidate_profile[transport_type_ids][]", transport.id,
                             form.object.transport_type_ids.include?(transport.id),
                             id: "transport_#{transport.id}", class: "h-4 w-4 rounded border-slate-300" %>

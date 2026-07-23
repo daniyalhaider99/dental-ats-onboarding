@@ -7,7 +7,7 @@
     <div class="space-y-1">
       <%= ef.label :level, "Level (optional)", class: "block text-sm font-medium text-slate-700" %>
       <%= ef.select :level, onboarding_education_levels, { include_blank: "Select…" },
-            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+            class: "form-input" %>
     </div>
 
     <%= render "onboarding/profiles/labeled_input", form: ef, field: :start_date, label: "Start date (optional)", as: :date_field %>

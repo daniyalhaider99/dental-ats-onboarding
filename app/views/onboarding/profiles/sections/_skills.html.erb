@@ -1,8 +1,8 @@
 <% job_function = local_assigns.fetch(:job_function, profile.job_function) %>
 <% skills = job_function&.skill_group&.skills&.active&.ordered || Skill.none %>
 
-<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-  <h2 class="text-base font-semibold text-slate-900">Skills</h2>
+<section class="section-card">
+  <%= onboarding_section_header("Skills", :skills) %>
   <p class="mt-1 text-sm text-slate-500">Skills are shown for your selected job function.</p>
 
   <%= turbo_frame_tag "candidate_skills",
@@ -10,7 +10,7 @@
     <% if skills.any? %>
       <div class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
         <% skills.each do |skill| %>
-          <label class="flex items-center gap-2 text-sm text-slate-700">
+          <label class="choice-pill">
             <%= check_box_tag "candidate_profile[skill_ids][]", skill.id,
                               profile.skill_ids.include?(skill.id),
                               id: "skill_#{skill.id}", class: "h-4 w-4 rounded border-slate-300" %>

@@ -1,5 +1,5 @@
-<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-  <h2 class="text-base font-semibold text-slate-900">Additional information</h2>
+<section class="section-card">
+  <%= onboarding_section_header("Additional information", :additional) %>
 
   <div class="mt-4 space-y-4">
     <div class="space-y-1">
@@ -8,19 +8,19 @@
         <%= provenance_badge(CandidateProfiles::FieldProvenance.new(form.object), :professional_summary) %>
       </div>
       <%= form.text_area :professional_summary, rows: 3,
-            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+            class: "form-input" %>
     </div>
 
     <div class="space-y-1">
       <%= form.label :motivation, "Motivation for employer (optional)", class: "block text-sm font-medium text-slate-700" %>
       <%= form.text_area :motivation, rows: 3,
-            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+            class: "form-input" %>
     </div>
 
     <div class="space-y-1">
       <%= form.label :internal_notes, "Internal notes (only you fill this in)", class: "block text-sm font-medium text-slate-700" %>
       <%= form.text_area :internal_notes, rows: 2,
-            class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:ring-slate-500" %>
+            class: "form-input" %>
     </div>
   </div>
 </section>
