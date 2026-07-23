@@ -12,6 +12,34 @@ RSpec.describe "Admin candidates" do
     expect(response.body).to include("Anna de Vries")
   end
 
+  describe "optional HTTP basic auth" do
+    around do |example|
+      ENV["ADMIN_USERNAME"] = "recruiter"
+      ENV["ADMIN_PASSWORD"] = "s3cret"
+      example.run
+    ensure
+      ENV.delete("ADMIN_USERNAME")
+      ENV.delete("ADMIN_PASSWORD")
+    end
+
+    it "challenges an unauthenticated request when credentials are configured" do
+      get admin_candidates_path
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "allows a request with the correct credentials" do
+      credentials = ActionController::HttpAuthentication::Basic.encode_credentials("recruiter", "s3cret")
+      get admin_candidates_path, headers: { "Authorization" => credentials }
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "rejects wrong credentials" do
+      credentials = ActionController::HttpAuthentication::Basic.encode_credentials("recruiter", "wrong")
+      get admin_candidates_path, headers: { "Authorization" => credentials }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
   it "shows a candidate profile" do
     create(:education, candidate_profile: profile, study: "Tandheelkunde")
     get admin_candidate_path(profile)
