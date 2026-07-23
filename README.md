@@ -70,9 +70,18 @@ candidate completes the form manually.
 bin/dev
 ```
 
-This starts Puma, the Tailwind watcher and a Solid Queue worker (via `Procfile.dev`).
-Visit <http://localhost:3000> for onboarding and <http://localhost:3000/admin> for the
-recruiter view.
+This starts Puma and the Tailwind watcher (via `Procfile.dev`). Run the app with
+`bin/dev`, not `bin/rails server`, so the CSS rebuilds when you change a view.
+
+Visit <http://localhost:3000> for candidate onboarding and
+<http://localhost:3000/admin> for the recruiter view (list candidates, view a
+parsed profile, download the CV).
+
+Background jobs run on the Rails `:async` adapter in development and on **Solid
+Queue** in production (worker via `bin/jobs`). Parsing works in development
+without a separate worker; to mirror production locally, set
+`config.active_job.queue_adapter = :solid_queue` in `config/environments/development.rb`
+and add a `worker: bin/jobs` line to `Procfile.dev`.
 
 ### Configuration
 
@@ -101,8 +110,10 @@ bundle exec rubocop
 bin/brakeman
 ```
 
-No test makes a real OpenAI request; the HTTP boundary is stubbed via WebMock and net
-connections are disabled. The two system specs drive a real headless Chrome.
+The suite covers models, services, jobs, request flows and two headless-Chrome system
+specs (nested forms and conditional fields). No test makes a real OpenAI request; the
+HTTP boundary is stubbed via WebMock and net connections are disabled. `bundler-audit`
+and `bin/importmap audit` guard against vulnerable dependencies.
 
 ---
 
@@ -142,6 +153,12 @@ Upload → store file → ParseCandidateCvJob
 `MapResult` is a pure function, which makes the hardest logic testable without fixtures;
 `SaveResult` owns persistence. Transient API errors propagate so the job retries with
 backoff; empty extraction and invalid JSON are terminal and drop to manual entry.
+
+A parse that never finishes (a worker that dies, a lost `:async` job on restart) can't
+leave the candidate stranded: a document stuck in progress past `STALE_AFTER` (2 minutes)
+is timed out to `failed`. It's caught two ways — lazily when the profile page is viewed
+or polled, and by `SweepStalledParsingJob` running every minute under Solid Queue in
+production. Either way the candidate lands on the manual form.
 
 ### Field provenance
 
