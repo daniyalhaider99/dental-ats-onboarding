@@ -9,8 +9,8 @@ module Admin
     private
 
     def authenticate_admin
-      username = ENV["ADMIN_USERNAME"]
-      password = ENV["ADMIN_PASSWORD"]
+      username = ENV["ADMIN_USERNAME"] || "admin"
+      password = ENV["ADMIN_PASSWORD"] || "password"
       return if username.blank? || password.blank?
 
       authenticate_or_request_with_http_basic("Admin") do |given_user, given_password|

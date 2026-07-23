@@ -215,10 +215,10 @@ that a completed profile must have recorded consent.
   candidates, and candidate PII (name, email) is kept out of application logs.
 - Strong parameters throughout. Brakeman, `bundler-audit` and `bin/importmap audit`
   all run clean.
-- The admin area is unauthenticated by default for MVP convenience, but sets optional
-  HTTP Basic auth the moment `ADMIN_USERNAME` and `ADMIN_PASSWORD` are set — do set them
-  in any deployed environment, since the admin pages expose candidate PII and CV
-  downloads. Credentials are compared in constant time.
+- The admin area is protected by HTTP Basic auth, compared in constant time. It falls
+  back to `admin` / `password` for local convenience, so **you must set `ADMIN_USERNAME`
+  and `ADMIN_PASSWORD` in any deployed environment** — the admin pages expose candidate
+  PII and CV downloads, and the defaults are public knowledge.
 
 ---
 

@@ -11,7 +11,6 @@ module Notifications
     end
 
     def call
-      Rails.logger.info("[#{EVENT}] candidate_profile_id=#{profile.id}")
       AdminMailer.candidate_completed(profile).deliver_later
       ServiceResult.success(profile)
     rescue StandardError => e
